@@ -1,5 +1,5 @@
 const deepMix = require('@antv/util/lib/deep-mix');
-import editorStyle from "../util/defaultStyle";
+import editorStyle from '../util/defaultStyle';
 
 const taskDefaultOptions = {
   icon: null,
@@ -9,10 +9,10 @@ const taskDefaultOptions = {
     left: 2,
     top: 2,
   },
-  style:{
+  style: {
     ...editorStyle.nodeStyle,
     fill: '#E7F7FE',
-    stroke:'#1890FF',
+    stroke: '#1890FF',
     cursor: 'default',
   },
   stateStyles: {
@@ -21,8 +21,8 @@ const taskDefaultOptions = {
     },
     hover: {
       cursor: editorStyle.cursor.hoverNode,
-    }
-  }
+    },
+  },
 };
 
 const gatewayDefaultOptions = {
@@ -33,10 +33,10 @@ const gatewayDefaultOptions = {
     left: 2,
     top: 2,
   },
-  style:{
+  style: {
     ...editorStyle.nodeStyle,
     fill: '#E8FEFA',
-    stroke:'#13C2C2',
+    stroke: '#13C2C2',
     cursor: 'default',
   },
   stateStyles: {
@@ -45,8 +45,8 @@ const gatewayDefaultOptions = {
     },
     hover: {
       cursor: editorStyle.cursor.hoverNode,
-    }
-  }
+    },
+  },
 };
 
 const startDefaultOptions = {
@@ -57,10 +57,10 @@ const startDefaultOptions = {
     left: 6,
     top: 6,
   },
-  style:{
+  style: {
     ...editorStyle.nodeStyle,
     fill: '#FEF7E8',
-    stroke:'#FA8C16',
+    stroke: '#FA8C16',
     cursor: 'default',
   },
   stateStyles: {
@@ -69,8 +69,8 @@ const startDefaultOptions = {
     },
     hover: {
       cursor: editorStyle.cursor.hoverNode,
-    }
-  }
+    },
+  },
 };
 
 const endDefaultOptions = {
@@ -81,10 +81,10 @@ const endDefaultOptions = {
     left: 6,
     top: 6,
   },
-  style:{
+  style: {
     ...editorStyle.nodeStyle,
     fill: '#EFF7E8',
-    stroke:'#F5222D',
+    stroke: '#F5222D',
     cursor: 'default',
   },
   stateStyles: {
@@ -93,8 +93,8 @@ const endDefaultOptions = {
     },
     hover: {
       cursor: editorStyle.cursor.hoverNode,
-    }
-  }
+    },
+  },
 };
 
 const catchDefaultOptions = {
@@ -105,10 +105,10 @@ const catchDefaultOptions = {
     left: -10,
     top: -8,
   },
-  style:{
+  style: {
     ...editorStyle.nodeStyle,
     fill: '#FEF7E8',
-    stroke:'#FA8C16',
+    stroke: '#FA8C16',
     cursor: 'default',
   },
   stateStyles: {
@@ -117,309 +117,390 @@ const catchDefaultOptions = {
     },
     hover: {
       cursor: editorStyle.cursor.hoverNode,
-    }
-  }
+    },
+  },
 };
 
 export default function(G6) {
-  G6.registerNode('task-node', {
-    shapeType: 'rect',
-    options:{
-      ...taskDefaultOptions
+  G6.registerNode(
+    'task-node',
+    {
+      shapeType: 'rect',
+      options: {
+        ...taskDefaultOptions,
+      },
+      getShapeStyle(cfg) {
+        cfg.size = [80, 44];
+        const width = cfg.size[0];
+        const height = cfg.size[1];
+        const style = {
+          x: 0 - width / 2,
+          y: 0 - height / 2,
+          width,
+          height,
+          ...this.options.style,
+        };
+        return style;
+      },
     },
-    getShapeStyle(cfg) {
-      cfg.size = [80, 44];
-      const width = cfg.size[0];
-      const height = cfg.size[1];
-      const style = {
-        x: 0 - width / 2,
-        y: 0 - height / 2,
-        width,
-        height,
-        ...this.options.style,
-      };
-      return style;
-    }
-  }, 'base-node');
-  G6.registerNode('gateway-node', {
-    shapeType: 'path',
-    labelPosition: 'bottom',
-    options:{
-      ...gatewayDefaultOptions
-    },
-    getShapeStyle(cfg) {
-      cfg.size = [40, 40];
-      const width = cfg.size[0];
-      const height = cfg.size[1];
-      const gap = 4;
-      const style = {
-        path: [
-          ['M', 0 - gap, 0 - height / 2 + gap],
-          ['Q', 0, 0 - height / 2, gap, 0 - height / 2 + gap],
-          ['L', width / 2 - gap, 0 - gap],
-          ['Q', width / 2, 0, width / 2 - gap, gap],
-          ['L', gap, height / 2 - gap],
-          ['Q', 0, height / 2, 0 - gap, height / 2 - gap],
-          ['L', -width / 2 + gap, gap],
-          ['Q', -width / 2, 0, -width / 2 + gap, 0 - gap],
-          ['Z']
-        ],
-        ...this.options.style,
-      };
-      return style;
-    },
-  }, 'base-node');
-  G6.registerNode('exclusive-gateway-node', {
-    afterDraw(cfg, group) {
-      group.icon = group.addShape('path', {
-        attrs: {
+    'base-node'
+  );
+  G6.registerNode(
+    'gateway-node',
+    {
+      shapeType: 'path',
+      labelPosition: 'bottom',
+      options: {
+        ...gatewayDefaultOptions,
+      },
+      getShapeStyle(cfg) {
+        cfg.size = [40, 40];
+        const width = cfg.size[0];
+        const height = cfg.size[1];
+        const gap = 4;
+        const style = {
           path: [
-            ['M', -8, -8],
-            ['L', 8, 8],
+            ['M', 0 - gap, 0 - height / 2 + gap],
+            ['Q', 0, 0 - height / 2, gap, 0 - height / 2 + gap],
+            ['L', width / 2 - gap, 0 - gap],
+            ['Q', width / 2, 0, width / 2 - gap, gap],
+            ['L', gap, height / 2 - gap],
+            ['Q', 0, height / 2, 0 - gap, height / 2 - gap],
+            ['L', -width / 2 + gap, gap],
+            ['Q', -width / 2, 0, -width / 2 + gap, 0 - gap],
             ['Z'],
-            ['M', 8, -8],
-            ['L', -8, 8],
-            ['Z']
           ],
-          lineWidth: 2,
-          stroke: this.options.style.stroke,
-        }
-      });
-      this.runAnimate(cfg,group);
+          ...this.options.style,
+        };
+        return style;
+      },
     },
-  }, 'gateway-node');
-  G6.registerNode('parallel-gateway-node', {
-    afterDraw(cfg, group) {
-      group.icon = group.addShape('path', {
-        attrs: {
-          path: [
-            ['M', 0, -10],
-            ['L', 0, 10],
-            ['Z'],
-            ['M', -10, 0],
-            ['L', 10, 0],
-            ['Z']
-          ],
-          lineWidth: 2,
-          stroke: this.options.style.stroke,
-        }
-      });
-      this.runAnimate(cfg,group);
+    'base-node'
+  );
+  G6.registerNode(
+    'exclusive-gateway-node',
+    {
+      afterDraw(cfg, group) {
+        group.icon = group.addShape('path', {
+          attrs: {
+            path: [['M', -8, -8], ['L', 8, 8], ['Z'], ['M', 8, -8], ['L', -8, 8], ['Z']],
+            lineWidth: 2,
+            stroke: this.options.style.stroke,
+          },
+        });
+        this.runAnimate(cfg, group);
+      },
     },
-  }, 'gateway-node');
-  G6.registerNode('inclusive-gateway-node', {
-    afterDraw(cfg, group) {
-      group.icon = group.addShape('circle', {
-        attrs: {
+    'gateway-node'
+  );
+  G6.registerNode(
+    'parallel-gateway-node',
+    {
+      afterDraw(cfg, group) {
+        group.icon = group.addShape('path', {
+          attrs: {
+            path: [['M', 0, -10], ['L', 0, 10], ['Z'], ['M', -10, 0], ['L', 10, 0], ['Z']],
+            lineWidth: 2,
+            stroke: this.options.style.stroke,
+          },
+        });
+        this.runAnimate(cfg, group);
+      },
+    },
+    'gateway-node'
+  );
+
+  G6.registerNode(
+    'inclusive-gateway-node',
+    {
+      afterDraw(cfg, group) {
+        group.icon = group.addShape('circle', {
+          attrs: {
+            x: 0,
+            y: 0,
+            r: 10,
+            lineWidth: 2,
+            stroke: this.options.style.stroke,
+          },
+        });
+        this.runAnimate(cfg, group);
+      },
+    },
+    'gateway-node'
+  );
+  G6.registerNode(
+    'start-node',
+    {
+      shapeType: 'circle',
+      labelPosition: 'bottom',
+      options: {
+        ...startDefaultOptions,
+      },
+      getShapeStyle(cfg) {
+        cfg.size = [30, 30];
+        const width = cfg.size[0];
+        const style = {
           x: 0,
           y: 0,
-          r: 10,
-          lineWidth: 2,
-          stroke: this.options.style.stroke,
-        }
-      });
-      this.runAnimate(cfg,group);
+          r: width / 2,
+          ...this.options.style,
+        };
+        return style;
+      },
+      afterDraw(cfg, group) {
+        group.icon = group.addShape('path', {
+          attrs: {
+            path: [
+              ['M', -4, -6],
+              ['L', 6, 0],
+              ['L', -4, 6],
+              ['Z'], // close
+            ],
+            fill: this.options.style.stroke,
+            stroke: this.options.style.stroke,
+          },
+        });
+      },
+      getAnchorPoints() {
+        return [
+          [0.5, 0], // top
+          [1, 0.5], // right
+          [0.5, 1], // bottom
+        ];
+      },
     },
-  }, 'gateway-node');
-  G6.registerNode('start-node', {
-    shapeType: 'circle',
-    labelPosition: 'bottom',
-    options: {
-      ...startDefaultOptions
+    'base-node'
+  );
+  G6.registerNode(
+    'end-node',
+    {
+      shapeType: 'circle',
+      labelPosition: 'bottom',
+      options: {
+        ...endDefaultOptions,
+      },
+      getShapeStyle(cfg) {
+        cfg.size = [30, 30];
+        const width = cfg.size[0];
+        const style = {
+          x: 0,
+          y: 0,
+          r: width / 2,
+          ...this.options.style,
+        };
+        return style;
+      },
+      afterDraw(cfg, group) {
+        group.icon = group.addShape('path', {
+          attrs: {
+            path: [
+              ['M', -4, -4],
+              ['L', 4, -4],
+              ['L', 4, 4],
+              ['L', -4, 4],
+              ['Z'], // close
+            ],
+            fill: this.options.style.stroke,
+            stroke: this.options.style.stroke,
+          },
+        });
+      },
+      getAnchorPoints() {
+        return [
+          [0.5, 0], // top
+          [0.5, 1], // bottom
+          [0, 0.5], // left
+        ];
+      },
     },
-    getShapeStyle(cfg) {
-      cfg.size = [30, 30];
-      const width = cfg.size[0];
-      const style = {
-        x: 0,
-        y: 0,
-        r: width / 2,
-        ...this.options.style,
-      };
-      return style;
-    },
-    afterDraw(cfg, group) {
-      group.icon = group.addShape('path', {
-        attrs: {
+    'base-node'
+  );
+  G6.registerNode(
+    'catch-node',
+    {
+      shapeType: 'path',
+      labelPosition: 'bottom',
+      options: {
+        ...catchDefaultOptions,
+      },
+      getShapeStyle(cfg) {
+        cfg.size = [50, 30];
+        const width = cfg.size[0];
+        const height = cfg.size[1];
+        const style = {
           path: [
-            ['M', -4 , -6],
-            ['L', 6, 0],
-            ['L', -4, 6],
-            ['Z'] // close
+            ['M', 0, -height / 3],
+            ['L', width / 2, -height / 3],
+            ['L', 0, (height / 3) * 2],
+            ['L', -width / 2, -height / 3],
+            ['Z'], // close
           ],
-          fill: this.options.style.stroke,
-          stroke: this.options.style.stroke,
-        }
-      });
-    },
-    getAnchorPoints() {
-      return [
-        [0.5, 0], // top
-        [1, 0.5], // right
-        [0.5, 1], // bottom
-      ]
-    }
-  }, 'base-node');
-  G6.registerNode('end-node', {
-    shapeType: 'circle',
-    labelPosition: 'bottom',
-    options: {
-      ...endDefaultOptions
-    },
-    getShapeStyle(cfg) {
-      cfg.size = [30, 30];
-      const width = cfg.size[0];
-      const style = {
-        x: 0,
-        y: 0,
-        r: width / 2,
-        ...this.options.style,
-      };
-      return style;
-    },
-    afterDraw(cfg, group) {
-      group.icon = group.addShape('path', {
-        attrs: {
-          path: [
-            ['M', -4 , -4],
-            ['L', 4, -4],
-            ['L', 4, 4],
-            ['L', -4, 4],
-            ['Z'] // close
-          ],
-          fill: this.options.style.stroke,
-          stroke: this.options.style.stroke,
-        }
-      });
-    },
-    getAnchorPoints() {
-      return [
-        [0.5, 0], // top
-        [0.5, 1], // bottom
-        [0, 0.5], // left
-      ]
-    }
-  }, 'base-node');
-  G6.registerNode('catch-node', {
-    shapeType: 'path',
-    labelPosition: 'bottom',
-    options: {
-      ...catchDefaultOptions
-    },
-    getShapeStyle(cfg) {
-      cfg.size = [50, 30];
-      const width = cfg.size[0];
-      const height = cfg.size[1];
-      const style = {
-        path: [
-          ['M', 0 , -height/3],
-          ['L', width/2, -height/3],
-          ['L', 0, height/3*2],
-          ['L', -width/2, -height/3],
-          ['Z'] // close
-        ],
-        ...this.options.style,
-      };
-      return style;
-    },
-    getAnchorPoints() {
-      return [
-        [0.5, 0], // top
-        [0.8, 0.38], // right
-        [0.5, 1], // bottom
-        [0.2, 0.38], // left
-      ]
-    }
-  }, 'base-node');
-  G6.registerNode('user-task-node', {
-    options: deepMix({},taskDefaultOptions,{
-      icon: require('../assets/icons/flow/icon_user.svg'),
-      style: {
-        fill: '#E7F7FE',
-        stroke: '#1890FF',
+          ...this.options.style,
+        };
+        return style;
       },
-      stateStyles: {
-        selected: {
-          fill: '#95D6FB',
-        },
-      }
-    }),
-  }, 'task-node');
-  G6.registerNode('script-task-node', {
-    options: deepMix({},taskDefaultOptions,{
-      icon: require('../assets/icons/flow/icon_script.svg'),
-      style: {
-        fill: '#FFF7E6',
-        stroke: '#FFA940',
+      getAnchorPoints() {
+        return [
+          [0.5, 0], // top
+          [0.8, 0.38], // right
+          [0.5, 1], // bottom
+          [0.2, 0.38], // left
+        ];
       },
-      stateStyles: {
-        selected: {
-          fill: '#FFE7BA',
+    },
+    'base-node'
+  );
+  G6.registerNode(
+    'user-task-node',
+    {
+      options: deepMix({}, taskDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_user.svg'),
+        style: {
+          fill: '#E7F7FE',
+          stroke: '#1890FF',
         },
-      }
-    }),
-  }, 'task-node');
-  G6.registerNode('java-task-node', {
-    options: deepMix({},taskDefaultOptions,{
-      icon: require('../assets/icons/flow/icon_java.svg'),
-      style: {
-        fill: '#FFF1F0',
-        stroke: '#FF4D4F',
+        stateStyles: {
+          selected: {
+            fill: '#95D6FB',
+          },
+        },
+      }),
+    },
+    'task-node'
+  );
+  G6.registerNode(
+    'script-task-node',
+    {
+      options: deepMix({}, taskDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_script.svg'),
+        style: {
+          fill: '#FFF7E6',
+          stroke: '#FFA940',
+        },
+        stateStyles: {
+          selected: {
+            fill: '#FFE7BA',
+          },
+        },
+      }),
+    },
+    'task-node'
+  );
+  G6.registerNode(
+    'java-task-node',
+    {
+      options: deepMix({}, taskDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_java.svg'),
+        style: {
+          fill: '#FFF1F0',
+          stroke: '#FF4D4F',
+        },
+        stateStyles: {
+          selected: {
+            fill: '#FFCCC7',
+          },
+        },
+      }),
+    },
+    'task-node'
+  );
+  G6.registerNode(
+    'mail-task-node',
+    {
+      options: deepMix({}, taskDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_mail.svg'),
+        style: {
+          fill: '#F6FFED',
+          stroke: '#73D13D',
+        },
+        stateStyles: {
+          selected: {
+            fill: '#D9F7BE',
+          },
+        },
+      }),
+    },
+    'task-node'
+  );
+  G6.registerNode(
+    'receive-task-node',
+    {
+      options: deepMix({}, taskDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_receive.svg'),
+        style: {
+          fill: '#FFF0F6',
+          stroke: '#FF85C0',
+        },
+        stateStyles: {
+          selected: {
+            fill: '#FFD6E7',
+          },
+        },
+      }),
+    },
+    'task-node'
+  );
+  G6.registerNode(
+    'timer-start-node',
+    {
+      options: deepMix({}, startDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_timer.svg'),
+      }),
+      afterDraw(cfg, group) {
+        this.runAnimate(cfg, group);
       },
-      stateStyles: {
-        selected: {
-          fill: '#FFCCC7',
-        },
-      }
-    }),
-  }, 'task-node');
-  G6.registerNode('mail-task-node', {
-    options: deepMix({},taskDefaultOptions,{
-      icon: require('../assets/icons/flow/icon_mail.svg'),
-      style: {
-        fill: '#F6FFED',
-        stroke: '#73D13D',
+    },
+    'start-node'
+  );
+  G6.registerNode(
+    'message-start-node',
+    {
+      options: deepMix({}, startDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_message.svg'),
+      }),
+      afterDraw(cfg, group) {
+        this.runAnimate(cfg, group);
       },
-      stateStyles: {
-        selected: {
-          fill: '#D9F7BE',
-        },
-      }
-    }),
-  }, 'task-node');
-  G6.registerNode('receive-task-node', {
-    options: deepMix({},taskDefaultOptions,{
-      icon: require('../assets/icons/flow/icon_receive.svg'),
-      style: {
-        fill: '#FFF0F6',
-        stroke: '#FF85C0',
+    },
+    'start-node'
+  );
+  G6.registerNode(
+    'signal-start-node',
+    {
+      options: deepMix({}, startDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_signal.svg'),
+      }),
+      afterDraw(cfg, group) {
+        this.runAnimate(cfg, group);
       },
-      stateStyles: {
-        selected: {
-          fill: '#FFD6E7',
-        },
-      }
-    }),
-  }, 'task-node');
-  G6.registerNode('timer-start-node', {
-    options: deepMix({},startDefaultOptions,{icon: require('../assets/icons/flow/icon_timer.svg')}),
-    afterDraw(cfg, group) { this.runAnimate(cfg,group) },
-  }, 'start-node');
-  G6.registerNode('message-start-node', {
-    options: deepMix({},startDefaultOptions,{icon: require('../assets/icons/flow/icon_message.svg')}),
-    afterDraw(cfg, group) { this.runAnimate(cfg,group) },
-  }, 'start-node');
-  G6.registerNode('signal-start-node', {
-    options: deepMix({},startDefaultOptions,{icon: require('../assets/icons/flow/icon_signal.svg')}),
-    afterDraw(cfg, group) { this.runAnimate(cfg,group) },
-  }, 'start-node');
-  G6.registerNode('timer-catch-node', {
-    options: deepMix({},catchDefaultOptions,{icon: require('../assets/icons/flow/icon_timer.svg')}),
-  }, 'catch-node');
-  G6.registerNode('signal-catch-node', {
-    options: deepMix({},catchDefaultOptions,{icon: require('../assets/icons/flow/icon_signal.svg')}),
-  }, 'catch-node');
-  G6.registerNode('message-catch-node', {
-    options: deepMix({},catchDefaultOptions,{icon: require('../assets/icons/flow/icon_message.svg')}),
-  }, 'catch-node');
+    },
+    'start-node'
+  );
+  G6.registerNode(
+    'timer-catch-node',
+    {
+      options: deepMix({}, catchDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_timer.svg'),
+      }),
+    },
+    'catch-node'
+  );
+  G6.registerNode(
+    'signal-catch-node',
+    {
+      options: deepMix({}, catchDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_signal.svg'),
+      }),
+    },
+    'catch-node'
+  );
+  G6.registerNode(
+    'message-catch-node',
+    {
+      options: deepMix({}, catchDefaultOptions, {
+        icon: require('../assets/icons/flow/icon_message.svg'),
+      }),
+    },
+    'catch-node'
+  );
 }
