@@ -1,7 +1,11 @@
 import editorStyle from '../util/defaultStyle';
 const Item = require('@antv/g6/src/item/item');
 
-const createAnchor = (index,style,group) => {
+// 使用工厂函数创建一个对象
+// 新版改成了 class Anchor extends Item
+
+// 注意这个方法返回的是anchor所在的group， 不是anchor
+const createAnchor = (index, style, group) => {
   const anchorContainer = group.addGroup();
   const anchor = new Item({
     type: 'anchor',
@@ -14,33 +18,30 @@ const createAnchor = (index,style,group) => {
         ...style,
         ...editorStyle.anchorPointStyle,
         cursor: editorStyle.cursor.hoverEffectiveAnchor,
-      }
+      },
     },
   });
   anchor.isAnchor = true;
   anchor.toFront();
   let hotpot;
-  anchor.showHotpot = function () {
+  anchor.showHotpot = function() {
     hotpot = anchorContainer.addShape('marker', {
       attrs: {
         ...style,
-        ...editorStyle.anchorHotsoptStyle
-      }
+        ...editorStyle.anchorHotsoptStyle,
+      },
     });
     hotpot.toFront();
     anchor.getKeyShape().toFront();
   };
-  anchor.setActived = function () {
-    anchor.update({style: {...editorStyle.anchorPointHoverStyle}});
+  anchor.setActived = function() {
+    anchor.update({ style: { ...editorStyle.anchorPointHoverStyle } });
   };
-  anchor.clearActived = function () {
-    anchor.update({style: {...editorStyle.anchorPointStyle}});
+  anchor.clearActived = function() {
+    anchor.update({ style: { ...editorStyle.anchorPointStyle } });
   };
-  anchor.setHotspotActived = function (act) {
-    hotpot &&
-    (act ?
-      hotpot.attr(editorStyle.anchorHotsoptActivedStyle)
-      : hotpot.attr(editorStyle.anchorHotsoptStyle))
+  anchor.setHotspotActived = function(act) {
+    hotpot && (act ? hotpot.attr(editorStyle.anchorHotsoptActivedStyle) : hotpot.attr(editorStyle.anchorHotsoptStyle));
   };
   return anchorContainer;
 };

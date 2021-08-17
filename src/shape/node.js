@@ -51,6 +51,8 @@ export default function(G6) {
             },
             group
           );
+
+          // 注意anchorShapes中包含的是Group (anchor所在的group)
           group.anchorShapes.push(anchor);
           group.getAllAnchors = () => {
             return group.anchorShapes.map(c => {
@@ -102,6 +104,8 @@ export default function(G6) {
             group.icon.hide();
           }
         }
+
+        // 注意anchorShapes中包含的是Group (anchor所在的group)
         group.anchorShapes = [];
         group.showAnchor = group => {
           this.drawAnchor(group);
