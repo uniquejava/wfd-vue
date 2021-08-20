@@ -60,6 +60,8 @@ export default {
     hoverEdgeControllPoint: 'crosshair',
     multiSelect: 'crosshair',
   },
+
+  // 从item panel拖拽创建node时，出现的节点虚线框
   nodeDelegationStyle: {
     stroke: '#1890FF',
     fill: '#1890FF',

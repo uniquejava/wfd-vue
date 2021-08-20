@@ -69,14 +69,14 @@ export default function(G6) {
       // 见文档： https://g6.antv.vision/zh/docs/api/graphFunc/on_off
 
       // e.target= Marker {isKeyShape: true,} e.taget只被操作的具体图形: 就是那个大蓝圈
-      console.log('e.target=', e.target);
+      // console.log('e.target=', e.target);
 
       // e.target.getParent()= Group， 就是anchor所在的group（包含anchor和marker两个shape)
-      console.log('e.target.getParent()=', e.target.getParent());
+      // console.log('e.target.getParent()=', e.target.getParent());
 
       // e.target.getParent().getParent()= Group {anchorShapes: Array(3), showAnchor: ƒ, clearAnchor: ƒ
       // 就是node所在的组， anchorShapes(3)表示这个group有三个anchor
-      console.log('e.target.getParent().getParent()=', e.target.getParent().getParent());
+      // console.log('e.target.getParent().getParent()=', e.target.getParent().getParent());
 
       // group.get('item')是取这个group中的keyShape， 就是核心节点
       const node = e.target
@@ -85,11 +85,11 @@ export default function(G6) {
         .get('item');
 
       // node= Node，这个group中的keyShape， 就是核心节点start-node
-      console.log('node=', node);
+      // console.log('node=', node);
 
       // e.item= Item {_cfg: {…}, isAnchor: true, showHotpot: ƒ, setActived: ƒ, clearActived: ƒ
       // e.item指Anchor这个Item
-      console.log('e.item=', e.item);
+      // console.log('e.item=', e.item);
 
       const anchorIndex = e.item.get('index');
       const point = node.getAnchorPoints()[anchorIndex];
@@ -162,8 +162,8 @@ export default function(G6) {
       this.graph.getNodes().forEach(node => {
         // 打印出每一个节点的类型
         // start, timerStart, userTask, scriptTask, inclusiveGateway, receiveTask, signalCatch, end
-        console.log('node=', node);
-        console.log('node.getModel().clazz=', node.getModel().clazz);
+        // console.log('node=', node);
+        // console.log('node.getModel().clazz=', node.getModel().clazz);
         if (
           node.getModel().clazz === 'startEvent' ||
           node.getModel().clazz === 'timerStartEvent' ||
@@ -181,10 +181,10 @@ export default function(G6) {
         // 显示这个节点上的hotspot/marker
         group.anchorShapes.forEach(a => {
           // a是group
-          console.log('a=', a);
+          // console.log('a=', a);
 
           // a.get('item') 才是 anchor
-          console.log('a.get("item")=', a.get('item'));
+          // console.log('a.get("item")=', a.get('item'));
           a.get('item').showHotpot();
         });
       });
